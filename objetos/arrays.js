@@ -36,5 +36,6 @@ console.log( otroArray.flat( 5 ) )
 
 const copiaMentores = Array.from( mentores )
 
+
 console.log( copiaMentores == mentores)
 
