@@ -38,4 +38,3 @@ const copiaMentores = Array.from( mentores )
 
 
 console.log( copiaMentores == mentores)
-
