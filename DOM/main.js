@@ -152,4 +152,3 @@ const mentoresReact = filtrarLista( mentores,'especialidad', 'React' )
 
 pintarTarjetas( mentores , $main )
 
-
