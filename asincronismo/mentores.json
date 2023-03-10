@@ -1,0 +1,14 @@
+[
+    {
+        "nombre" : "Nicolas",
+        "apellido" : "Cirulli",
+        "edad": 28,
+        "mentor" : true
+    },
+    {
+        "nombre" : "Lucrecia",
+        "apellido" : "Gillone",
+        "edad": 27,
+        "mentor" : true
+    }
+]
