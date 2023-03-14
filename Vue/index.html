@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Intro Vue JS</title>
+</head>
+<body class="bg-dark d-flex flex-wrap text-white justify-content-center align-items-center p-5">
+    
+    <h1 class="w-100 text-center">Intro Vue</h1>
+
+    <main id="app" class="row gap-3 justify-content-center">
+        {{filtro}}
+          <div class="col-10 p-3 d-flex flex-wrap justify-content-center">
+            <input type="text" class="form-control w-75" name="nombrePersonaje" v-model="valorBusqueda" placeholder="PJ: Sage">
+            <!-- <button class="btn btn-danger w-75" v-on:click.prevent="filtro" > buscar </button> -->
+          </div>
+          <div class="d-flex gap-5 w-100 justify-content-center">
+          
+            <template v-for="categoria of categorias">
+              <div class="form-check">
+                <label class="form-check-label">
+                  {{categoria}}
+                  <input class="form-check-input" v-model="checked" type="checkbox" :value="categoria">
+                </label>
+              </div>
+            </template>
+          </div>
+        <template v-if="personajesFiltrados.length > 0" v-for="personaje of personajesFiltrados">
+            <div v-if="personaje.isPlayableCharacter" class="card border-primary text-dark col-3">
+                <img class="card-img-top" :src="personaje.displayIcon" alt="Title">
+                <div class="card-body">
+                  <h4 :class=" personaje.role.displayName == 'Sentinel' ? 'card-title text-info' : 'card-title' ">{{personaje.displayName}}</h4>
+                  <p class="card-text">{{personaje.description}}</p>
+                  <p class="card-text">{{personaje.role.displayName}}</p>
+                  <!-- <a :href="'./details.html?id='+personaje.uuid" class="btn btn-secondary"> detalle </a> -->
+                </div>
+              </div>
+        </template>
+        <template v-else>
+          <h2 class="text-white"> No hay personajes</h2>
+        </template>   
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>
