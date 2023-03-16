@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,8 +11,9 @@
     
     <h1 class="w-100 text-center">Intro Vue</h1>
 
-    <main id="app" class="row gap-3 justify-content-center">
+    <main id="app" v-cloak class="row gap-3 justify-content-center">
         {{filtro}}
+        {{handleFav}}
           <div class="col-10 p-3 d-flex flex-wrap justify-content-center">
             <input type="text" class="form-control w-75" name="nombrePersonaje" v-model="valorBusqueda" placeholder="PJ: Sage">
             <!-- <button class="btn btn-danger w-75" v-on:click.prevent="filtro" > buscar </button> -->
@@ -28,14 +29,21 @@
               </div>
             </template>
           </div>
+          <button type="button" class="btn btn-primary col-6" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Ver favoritos
+          </button>
         <template v-if="personajesFiltrados.length > 0" v-for="personaje of personajesFiltrados">
-            <div v-if="personaje.isPlayableCharacter" class="card border-primary text-dark col-3">
+            <div v-if="personaje.isPlayableCharacter" class="card border-primary text-dark col-10 col-md-3 ">
                 <img class="card-img-top" :src="personaje.displayIcon" alt="Title">
                 <div class="card-body">
                   <h4 :class=" personaje.role.displayName == 'Sentinel' ? 'card-title text-info' : 'card-title' ">{{personaje.displayName}}</h4>
                   <p class="card-text">{{personaje.description}}</p>
                   <p class="card-text">{{personaje.role.displayName}}</p>
                   <!-- <a :href="'./details.html?id='+personaje.uuid" class="btn btn-secondary"> detalle </a> -->
+                    <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" v-model="favoritos" :value="personaje.displayName" :id="'card-'+personaje.displayName">
+                    <label class="form-check-label" :for="'card-'+personaje.displayName">Favoritos</label>
+                    </div>
                 </div>
               </div>
         </template>
@@ -43,11 +51,45 @@
           <h2 class="text-white"> No hay personajes</h2>
         </template>   
 
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Personajes Favoritos</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-dark ">
+              <template v-if="personajes.length > 0" v-for="personaje of personajesFiltrados">
+                <div v-if="favoritos.includes( personaje.displayName )" class="card border-primary text-dark col-10 col-md-3 mx-auto">
+                    <img class="card-img-top" :src="personaje.displayIcon" alt="Title">
+                    <div class="card-body">
+                      <h4 :class=" personaje.role.displayName == 'Sentinel' ? 'card-title text-info' : 'card-title' ">{{personaje.displayName}}</h4>
+                      <p class="card-text">{{personaje.description}}</p>
+                      <p class="card-text">{{personaje.role.displayName}}</p>
+                      <!-- <a :href="'./details.html?id='+personaje.uuid" class="btn btn-secondary"> detalle </a> -->
+                        <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" v-model="favoritos" :value="personaje.displayName" :id="'card-'+personaje.displayName">
+                        <label class="form-check-label" :for="'card-'+personaje.displayName">Favoritos</label>
+                        </div>
+                    </div>
+                  </div>
+            </template>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" v-on:click="borrarFavoritos" >Sacar todos los favoritos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./app.js"></script>
 </body>
 </html>
